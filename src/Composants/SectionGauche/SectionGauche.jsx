@@ -1,17 +1,16 @@
 import React from 'react';
+import Logo from '../../Logo/Logo.png'
 
 const SectionGauche = ({ isRegistration, onSwitchView }) => (
   <div className="flex-1 flex flex-col justify-center pr-8">
-    <div className="flex gap-3 mb-3">
-      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-        A
-      </div>
-      <h1 className="text-3xl font-semibold text-orange-500">Appla <strong>TN</strong></h1>
+    <div className="flex items-center gap-3 mb-6">
+      <img src={Logo} className='w-12 h-12'/>
+      <h1 className="text-3xl font-bold text-orange-500">Tounsi Store</h1>
     </div>
     
     <div className="mb-8">
       <p className="text-gray-700 leading-relaxed">
-        Bienvenue dans l'espace développeur de <strong>Appla TN</strong>.
+        Bienvenue dans l'espace développeur de <strong>Tounsi Store</strong>.
       </p>
       <p className="text-gray-700 text-[14px] leading-relaxed mt-1">
         {isRegistration 

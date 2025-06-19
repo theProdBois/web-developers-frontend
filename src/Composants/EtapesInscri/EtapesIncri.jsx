@@ -270,7 +270,7 @@ export const Step4 = ({ formData, setFormData }) => {
             )}
           </div>
           <span className="text-sm text-gray-600 leading-relaxed">
-            J'accepte les <a href="#" className="text-orange-500 hover:underline">conditions d'utilisation</a> et la <a href="#" className="text-orange-500 hover:underline">politique de confidentialité</a> d'Appla TN.
+            J'accepte les <a href="#" className="text-orange-500 hover:underline">conditions d'utilisation</a> et la <a href="#" className="text-orange-500 hover:underline">politique de confidentialité</a> de Tounsi Store.
           </span>
         </label>
       </div>

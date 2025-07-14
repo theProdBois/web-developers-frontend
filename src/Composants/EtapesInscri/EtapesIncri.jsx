@@ -155,14 +155,50 @@ export const Step2 = ({ formData, setFormData }) => {
 
 // Étape 3: Moyens de paiement
 export const Step3 = ({ formData, setFormData }) => {
-  const handleChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handlePaymentMethodChange = (paymentId, isChecked) => {
+    setFormData(prev => {
+      const currentMethods = prev.paymentMethods || [];
+      if (isChecked) {
+        // Ajouter le moyen de paiement s'il n'existe pas déjà
+        if (!currentMethods.find(method => method.id === paymentId)) {
+          return {
+            ...prev,
+            paymentMethods: [...currentMethods, { id: paymentId, account: '' }]
+          };
+        }
+      } else {
+        // Retirer le moyen de paiement
+        return {
+          ...prev,
+          paymentMethods: currentMethods.filter(method => method.id !== paymentId)
+        };
+      }
+      return prev;
+    });
+  };
+
+  const handleAccountChange = (paymentId, accountValue) => {
+    setFormData(prev => ({
+      ...prev,
+      paymentMethods: prev.paymentMethods.map(method =>
+        method.id === paymentId ? { ...method, account: accountValue } : method
+      )
+    }));
+  };
+
+  const isPaymentSelected = (paymentId) => {
+    return formData.paymentMethods?.some(method => method.id === paymentId) || false;
+  };
+
+  const getAccountValue = (paymentId) => {
+    const method = formData.paymentMethods?.find(method => method.id === paymentId);
+    return method?.account || '';
   };
 
   return (
     <div className="space-y-5 animate-fadeIn">
       <div>
-        <label className="block text-gray-600 text-[13px] mb-2">Moyen de paiement préféré</label>
+        <label className="block text-gray-600 text-[13px] mb-2">Moyens de paiement préférés (sélection multiple)</label>
         <div className="space-y-3">
           {[
             { id: 'flouci', name: 'Flouci', placeholder: 'Numéro de compte Flouci' },
@@ -172,27 +208,25 @@ export const Step3 = ({ formData, setFormData }) => {
             <div key={payment.id}>
               <label className="flex items-center cursor-pointer mb-2">
                 <input
-                  type="radio"
-                  name="paymentMethod"
-                  value={payment.id}
-                  checked={formData.paymentMethod === payment.id}
-                  onChange={(e) => handleChange('paymentMethod', e.target.value)}
+                  type="checkbox"
+                  checked={isPaymentSelected(payment.id)}
+                  onChange={(e) => handlePaymentMethodChange(payment.id, e.target.checked)}
                   className="sr-only"
                 />
                 <div className={`w-4 h-4 border-2 rounded-sm mr-2 transition-colors ${
-                  formData.paymentMethod === payment.id ? 'bg-orange-500 border-orange-500' : 'border-gray-300'
+                  isPaymentSelected(payment.id) ? 'bg-orange-500 border-orange-500' : 'border-gray-300'
                 }`}>
-                  {formData.paymentMethod === payment.id && (
+                  {isPaymentSelected(payment.id) && (
                     <FiCheckCircle className="w-full h-full text-white" />
                   )}
                 </div>
                 <span className="text-sm text-gray-600">{payment.name}</span>
               </label>
-              {formData.paymentMethod === payment.id && (
+              {isPaymentSelected(payment.id) && (
                 <input
                   type="text"
-                  value={formData.paymentAccount}
-                  onChange={(e) => handleChange('paymentAccount', e.target.value)}
+                  value={getAccountValue(payment.id)}
+                  onChange={(e) => handleAccountChange(payment.id, e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-orange-500 bg-gray-50 transition-colors animate-slideDown"
                   placeholder={payment.placeholder}
                 />

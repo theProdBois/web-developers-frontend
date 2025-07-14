@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FiX, FiCamera, FiUpload, FiGlobe, FiMapPin, FiGithub, FiLinkedin } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 
 const ProfilModal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -318,9 +317,8 @@ const ProfilModal = ({ isOpen, onClose }) => {
               <button
                 onClick={handleSubmit}
                 className="flex-1 px-4 py-1 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2"
-              > <Link to={"/tache"}>
-                    Terminer
-                </Link>
+              >
+                Terminer
               </button>
             </>
           )}

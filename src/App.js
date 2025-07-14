@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Tache from './Composants/Tache/Tache'
 import Tabeleaubord from './Composants/Tache/Tableau de bord/Tabeleaubord'
@@ -10,11 +10,32 @@ import Bienvenue from './Composants/Bienvenue/Bienvenue'
 import NotFound from './Composants/Not Found/NotFound'
 
 function App() {
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [isNewRegistration, setIsNewRegistration] = useState(false);
+
   return (
     <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Bienvenue/>}/>
-            <Route path="/tache" element={<Tache/>}>
+            <Route 
+              path='/' 
+              element={
+                <Bienvenue 
+                  setShowProfileModal={setShowProfileModal}
+                  setIsNewRegistration={setIsNewRegistration}
+                />
+              }
+            />
+            <Route 
+              path="/tache" 
+              element={
+                <Tache 
+                  showProfileModal={showProfileModal}
+                  setShowProfileModal={setShowProfileModal}
+                  isNewRegistration={isNewRegistration}
+                  setIsNewRegistration={setIsNewRegistration}
+                />
+              }
+            >
                 <Route path='' element={<Tabeleaubord/>}/>
                 <Route path='soumission' element={<Soumission/>}/>
                 <Route path='statistiques' element={<Status/>}/>  

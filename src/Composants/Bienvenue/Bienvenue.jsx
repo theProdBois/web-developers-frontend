@@ -3,7 +3,7 @@ import Inscription from '../Inscription/Inscription';
 import Login from '../Login/Login';
 import AnimationStyles from '../Animation/AnimationStyles';
 
-function Bienvenue() {
+function Bienvenue({ setShowProfileModal, setIsNewRegistration }) {
   const [currentView, setCurrentView] = useState('login');
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -36,7 +36,11 @@ function Bienvenue() {
           </div>
         ) : (
           <div className="animate-fadeIn">
-            <Inscription onSwitchView={() => handleSwitchView('login')} />
+            <Inscription 
+              onSwitchView={() => handleSwitchView('login')}
+              setShowProfileModal={setShowProfileModal}
+              setIsNewRegistration={setIsNewRegistration}
+            />
           </div>
         )}
       </div>
